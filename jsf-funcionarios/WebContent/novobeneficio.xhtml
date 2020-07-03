@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="_template.xhtml">
+	<f:metadata>
+		<f:viewParam name="beneficioId" value="#{beneficioBean.beneficioId}"/>
+		<f:viewAction action="#{beneficioBean.carregarBeneficioPeloId}" if="#{param.beneficioId != null}"/>
+	</f:metadata>
+		<ui:define name="titulo">
+			<p:outputPanel>Novo Benefício</p:outputPanel>
+		</ui:define>
+		<ui:define name="conteudo">
+			<h:form id="beneficioEdit">
+				<p:fieldset legend="Dados do benefício">
+				
+					<h:panelGrid columns="2">
+					
+						<p:outputLabel value="Tipo: " for="tipoBeneficio"/>
+						<p:inputText id="tipoBeneficio" value="#{beneficioBean.beneficio.tipo}" required="true" requiredMessage="O tipo é um campo obrigatório"/>
+						
+						<p:outputLabel value="Valor: " for="valorBeneficio"/>
+						<p:inputText id="valorBeneficio" value="#{beneficioBean.beneficio.valor}" required="true" requiredMessage="O valor é um campo obrigatório"/>
+						
+					</h:panelGrid>
+					<p:commandButton value="Salvar" action="#{beneficioBean.gravar}" process="@form" update="@form :formTabelaBeneficios"/>
+				</p:fieldset>
+			</h:form>
+			
+			<h:form id="formTabelaBeneficios">
+				<p:dataList value="#{beneficioBean.beneficios}" var="beneficio" type="definition">
+			        <f:facet name="header">
+			            Benefícios
+			        </f:facet>
+
+						<p:commandLink styleClass="ui-icon ui-icon-trash" style="float:left;margin-right:10px;margin-left:10px"
+										action="#{beneficioBean.remover(beneficio)}" process="@form" update="@form :formTabelaBeneficios">
+						</p:commandLink>
+						
+						<p:commandLink styleClass="ui-icon ui-icon-pencil" style="float:left;margin-right:10px" 
+										action="#{beneficioBean.carregar(beneficio)}" process="@form" update="@form :beneficioEdit">
+						</p:commandLink>
+						
+			        	#{beneficio.tipo} - #{beneficio.valor}
+			    </p:dataList>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+		
+</html>

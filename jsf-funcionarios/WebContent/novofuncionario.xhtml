@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+			xmlns:ui="http://java.sun.com/jsf/facelets"
+			xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="_template.xhtml">
+	<f:metadata>
+		<f:viewParam name="funcionarioId" value="#{funcionarioBean.funcionarioId}"/>
+		<f:viewAction action="#{funcionarioBean.carregarFuncionarioPeloId}" if="#{param.funcionarioId != null}"/>
+	</f:metadata>
+	
+		<ui:define name="titulo">
+			<p:outputPanel>Ficha Funcionário</p:outputPanel>
+		</ui:define>
+		<ui:define name="conteudo">
+			<h:form id="formCadastrar">
+				<p:messages id="message"/>
+				<p:fieldset legend="Dados do Funcionario">
+					<h:panelGrid columns="2">
+					
+						<p:outputLabel value="Nome: " for="nomeFuncionario"/>
+						<p:inputText id="nomeFuncionario" value="#{funcionarioBean.funcionario.nome}" required="true" requiredMessage="O nome é um campo obrigatório">
+							<f:ajax event="blur" render="message"/>
+						</p:inputText>
+						
+						<p:outputLabel value="CPF: " for="cpfFuncionario" />
+						<p:inputMask id="cpfFuncionario" value="#{funcionarioBean.funcionario.cpf}" mask="999.999.999-99" required="true" requiredMessage="O cpf é um campo obrigatório">
+							<f:ajax event="blur" render="message"/>
+						</p:inputMask>
+						
+						<p:outputLabel value="CTPS: " for="ctpsFuncionario"/>
+						<p:inputMask id="ctpsFuncionario" value="#{funcionarioBean.funcionario.ctps}" mask="999-99999.99-9" required="true" requiredMessage="O ctps é um campo obrigatório">
+							<f:ajax event="blur" render="message"/>
+						</p:inputMask>
+
+						<p:outputLabel value="Telefone: " for="telefoneFuncionario"/>
+						<p:inputMask id="telefoneFuncionario" value="#{funcionarioBean.funcionario.telefone}" mask="(99)99999-9999">
+						</p:inputMask>
+						
+						<p:outputLabel value="Data de Nascimento: " for="dataNascimentoFuncionario"/>
+						<p:calendar id="dataNascimentoFuncionario" value="#{funcionarioBean.funcionario.dataNascimento.time}" pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" mask="true"/>
+					
+						<p:outputLabel value="Data de contratação: " for="dataContratacaoFuncionario"/>
+						<p:calendar id="dataContratacaoFuncionario" value="#{funcionarioBean.funcionario.dataContratacao.time}" pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" mask="true"/>
+						
+						<p:outputLabel value="Salario: " for="salarioFuncionario"/>
+						<p:inputNumber id="salarioFuncionario" value="#{funcionarioBean.funcionario.salario}" >
+							<p:ajax update="salarioFuncionario"/>
+						</p:inputNumber>						
+						
+					</h:panelGrid>
+						<h:panelGrid columns="4">
+							<p:outputLabel value="Selecione o cargo" for="cargoFuncionario"/>
+					        <p:selectOneMenu id="cargoFuncionario" value="#{funcionarioBean.cargoId}" style="width:125px">
+					            <f:selectItem itemLabel=" - " />
+					            <f:selectItems value="#{funcionarioBean.cargos}" var="cargo" itemLabel="#{cargo.nome}" itemValue="#{cargo.id}"/>
+					         </p:selectOneMenu>
+							
+							<p:commandButton value="Confirmar cargo" action="#{funcionarioBean.gravarCargo}" process="@this cargoFuncionario">
+							</p:commandButton>
+							<p:commandButton value="Novo cargo" action="#{funcionarioBean.formCargo}" immediate="true">
+							</p:commandButton>
+							
+						</h:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="Beneficios do funcionario">
+						<h:panelGrid columns="4">
+							
+							<p:outputLabel value="Selecione os benefícios" for="beneficioFuncionario"/>
+							<p:selectOneMenu  id="beneficioFuncionario" value="#{funcionarioBean.beneficioId}" >
+								<f:selectItem itemLabel=" - " />
+								<f:selectItems  value="#{funcionarioBean.beneficios}" var="beneficio" itemLabel="#{beneficio.tipo}" itemValue="#{beneficio.id}"/>
+							</p:selectOneMenu>
+						
+							<p:commandButton value="Confirmar benefício" action="#{funcionarioBean.gravarBeneficio}"
+								process="@this beneficioFuncionario" update="tabelaBeneficios">
+							</p:commandButton>
+							<p:commandButton value="Novo beneficio" action="#{funcionarioBean.formBeneficio}" immediate="true">
+							</p:commandButton>
+						</h:panelGrid>
+						<p:dataTable value="#{funcionarioBean.beneficiosDoFuncionario}" var="beneficio" id="tabelaBeneficios" emptyMessage="Nenhum Benefício selecionado">
+								<p:column>
+									<h:outputText value="#{beneficio.tipo}"/>
+								</p:column>
+								
+								<p:column>
+									<p:commandLink styleClass="ui-icon ui-icon-trash" style="float:left;margin-right:10px;margin-left:10px" 
+													action="#{funcionarioBean.removerBeneficio(beneficio)}" process="@this" update="tabelaBeneficios"/>
+								</p:column>
+								
+						</p:dataTable>
+										
+				</p:fieldset>
+				<h:commandButton value="Salvar" action="#{funcionarioBean.gravar}"></h:commandButton>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+		
+</html>

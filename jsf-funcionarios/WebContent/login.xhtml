@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="_template.xhtml">
+		<ui:define name="titulo">
+			<p:outputPanel>Login</p:outputPanel>
+		</ui:define>
+		<ui:define name="conteudo">
+			<p:messages globalOnly="true"/>
+			<h:form id="login">
+				<p:fieldset legend="Dados do benefício">
+					<h:panelGrid columns="3">
+					
+						<p:outputLabel value="Email" for="email"/>
+						<p:inputText id="email" value="#{loginBean.usuario.email}" required="true" validatorMessage="Email Invalido">
+							<f:validateRegex pattern=".+@.+"/>
+							<f:ajax event="blur" render="messageEmail"/>
+						</p:inputText>
+						<p:messages for="email" id="messageEmail"/>
+						
+						<p:outputLabel value="Senha" for="senha"/>
+						<p:password id="senha" value="#{loginBean.usuario.senha}" feedback="true" inline="true" required="true"/>
+						<p:messages for="senha" id="messageSenha"/>
+						
+						
+					</h:panelGrid>
+					<p:commandButton value="Entrar" action="#{loginBean.entrar}" update="@form" process="@form"/>
+				</p:fieldset>
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+		
+</html>

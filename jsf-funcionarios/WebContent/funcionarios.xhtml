@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+		
+	<ui:composition template="_template.xhtml">
+		<ui:define name="titulo">
+			Funcionarios
+		</ui:define>
+		
+		<ui:define name="conteudo">
+			<h:form>
+				<p:dataTable value="#{funcionarioBean.funcionarios}" var="funcionario" id="tabelaFuncionarios" paginator="true" rows="10">
+					<f:facet name="header">Quadro de Funcionários</f:facet>
+					<p:column headerText="Nome" filterBy="#{funcionario.nome}" filterMatchMode="startsWith">
+						<h:outputText value="#{funcionario.nome}"/>
+					</p:column >
+					
+					<p:column headerText="Cargo">
+						<h:outputText value="#{funcionario.cargo.nome}"/>
+					</p:column>
+					
+					<p:column headerText="Telefone">
+						<h:outputText value="#{funcionario.telefone}"/>
+					</p:column>
+					
+					<p:column headerText="Salário">
+						<h:outputText value="#{funcionario.salario}"/>
+					</p:column>
+					
+					<p:column headerText="Contratação" >
+						<h:outputText value="#{funcionario.dataContratacao.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Alterações">
+						<p:commandLink styleClass="ui-icon ui-icon-trash" style="float:left;margin-right:10px" 
+						action="#{funcionarioBean.remover(funcionario)}" process="@form" update="tabelaFuncionarios">
+						</p:commandLink>
+						
+						<p:commandLink styleClass="ui-icon ui-icon-pencil" style="float:left;margin-right:10px" 
+						action="#{funcionarioBean.carregar(funcionario)}" process="@form" update="@all">
+						</p:commandLink>
+					</p:column>
+						
+				</p:dataTable>	
+			</h:form>	
+		</ui:define>
+	</ui:composition>
+</html>
