@@ -21,18 +21,18 @@ public class PopularBanco {
 			Cargo c2 = new Cargo("Diretor Comercial");
 			Cargo c3 = new Cargo("Gerente de Vendas");
 			Cargo c4 = new Cargo("Diretor Admistrativo");
-			Cargo c5 = new Cargo("Diretor de Produção");
+			Cargo c5 = new Cargo("Diretor de ProduÃ§Ã£o");
 			Cargo c6 = new Cargo("Gerente de Compras");
 			Cargo c7 = new Cargo("Gerente de Marketing");
 			Cargo c8 = new Cargo("Vendedor");
-			Cargo c9 = new Cargo("Auxiliar de Produção");
+			Cargo c9 = new Cargo("Auxiliar de ProduÃ§Ã£o");
 			
 			
 			Beneficio b1 = new Beneficio("Vale-transporte",87.50);
-			Beneficio b2 = new Beneficio("Vale-refeição",110.0);
-			Beneficio b3 = new Beneficio("Plano de saúde",250.0);
-			Beneficio b4 = new Beneficio("Plano odontológico",100.0);
-			Beneficio b5 = new Beneficio("Auxílio-creche",75.80);
+			Beneficio b2 = new Beneficio("Vale-refeiÃ§Ã£o",110.0);
+			Beneficio b3 = new Beneficio("Plano de saÃºde",250.0);
+			Beneficio b4 = new Beneficio("Plano odontolÃ³gico",100.0);
+			Beneficio b5 = new Beneficio("AuxÃ­lio-creche",75.80);
 
 		
 			Funcionario f1 = new Funcionario(Calendar.getInstance(),Calendar.getInstance(),c1,
@@ -43,7 +43,7 @@ public class PopularBanco {
 			f1.adicionarBeneficio(b4);
 			
 			Funcionario f2 = new Funcionario(Calendar.getInstance(),Calendar.getInstance(),c8,
-					"Carlos André de Holanda Florêncio e Silva","415.631.744-72","1184951515","4584189541",3000.0);
+					"Carlos AndrÃ© de Holanda FlorÃªncio e Silva","415.631.744-72","1184951515","4584189541",3000.0);
 			f2.adicionarBeneficio(b1);
 			f2.adicionarBeneficio(b2);
 			f2.adicionarBeneficio(b4);
@@ -101,7 +101,7 @@ public class PopularBanco {
 					"Renato Augosto Oliveira","41035895135","11784060729","45120789541",5000.0);
 			
 			Funcionario f12 = new Funcionario(Calendar.getInstance(),Calendar.getInstance(),c6,
-					"Carlos André de Holanda Florêncio e Silva","415.631.744-72","1184951515","4584189541",3000.0);
+					"Carlos AndrÃ© de Holanda FlorÃªncio e Silva","415.631.744-72","1184951515","4584189541",3000.0);
 			f12.adicionarBeneficio(b1);
 			f12.adicionarBeneficio(b2);
 			f12.adicionarBeneficio(b4);
@@ -121,7 +121,7 @@ public class PopularBanco {
 			f14.adicionarBeneficio(b3);
 			
 			Funcionario f15 = new Funcionario(Calendar.getInstance(),Calendar.getInstance(),c2,
-					"Fabiana Flávia da Silva ","061.195.974-76","1194105115","8741189541",5000.0);
+					"Fabiana FlÃ¡via da Silva ","061.195.974-76","1194105115","8741189541",5000.0);
 			f5.adicionarBeneficio(b1);
 			f5.adicionarBeneficio(b2);
 			f5.adicionarBeneficio(b4);
@@ -196,7 +196,8 @@ public class PopularBanco {
 			em.persist(f17);
 			em.persist(f18);
 			em.persist(f19);
-			em.persist(f20);		
+			em.persist(f20);
+			em.persist(usuario);
 
 			em.getTransaction().commit();
 		
